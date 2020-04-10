@@ -8,18 +8,21 @@ import api from "../../services/api";
 import logoImg from "../../assets/logo.png";
 
 import styles from "./styles";
+import { setLightEstimationEnabled } from "expo/build/AR";
 
 export default function Incidents() {
   const [incidents, setIncidents] = useState([]);
+  const [total, useTotal] = useState(0);
   const navigation = useNavigation();
 
-  function navigateToDetail() {
-    navigation.navigate("Detail");
+  function navigateToDetail(incident) {
+    navigation.navigate("Detail", { incident });
   }
 
   async function loadIncidents() {
     const response = await api.get("incidents");
     setIncidents(response.data);
+    setTotal(response.headers["x-total-count"]);
   }
 
   useEffect(() => {
@@ -31,7 +34,7 @@ export default function Incidents() {
       <View style={styles.header}>
         <Image source={logoImg} />
         <Text style={styles.headerText}>
-          Total de <Text style={styles.headerTextBold}> 0 casos</Text>.
+          Total de <Text style={styles.headerTextBold}> {total} casos</Text>.
         </Text>
       </View>
       <Text style={styles.title}>Bem-vindo!</Text>
@@ -62,7 +65,7 @@ export default function Incidents() {
 
             <TouchableOpacity
               style={styles.detailsButton}
-              onPress={navigateToDetail}
+              onPress={() => navigateToDetail(incident)}
             >
               <Text style={styles.detailsButtonText}>Ver mais detalhes</Text>
               <Feather name="arrow-right" size={16} color="#E02041" />
