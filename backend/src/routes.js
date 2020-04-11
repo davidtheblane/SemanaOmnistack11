@@ -1,8 +1,9 @@
 const express = require("express");
-const OngController = require("./Controllers/OngController");
-const IncidentController = require("./Controllers/IncidentController");
-const ProfileController = require("./Controllers/ProfileController");
-const SessionController = require("./Controllers/SessionController");
+
+const OngController = require("./controllers/OngController");
+const IncidentController = require("./controllers/IncidentController");
+const ProfileController = require("./controllers/ProfileController");
+const SessionController = require("./controllers/SessionController");
 
 const routes = express.Router();
 
